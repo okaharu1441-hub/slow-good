@@ -1,0 +1,1413 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>slow goods — on SUZURI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+  <style>
+:root {
+  --bg: #f6efe2;
+  --bg-soft: #efe6d3;
+  --bg-warm: #ebdfc7;
+  --paper: #fbf6ec;
+  --ink: #3d2f24;
+  --ink-soft: #6b574a;
+  --ink-mute: #9a8674;
+  --line: #d8c9ad;
+  --line-soft: #e6d8bd;
+  --accent: #b8633a;
+  --accent-deep: #8d4a2b;
+  --accent-soft: #e3a87f;
+  --gold: #c79759;
+
+  --radius: 10px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 2px rgba(61,47,36,0.06), 0 4px 12px rgba(61,47,36,0.04);
+  --shadow-md: 0 2px 6px rgba(61,47,36,0.08), 0 14px 28px rgba(61,47,36,0.07);
+
+  --max: 1200px;
+  --pad: 80px;
+  --pad-y: 120px;
+
+  --font-serif: "Zen Old Mincho", "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --font-sans: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+}
+
+[data-density="compact"] { --pad-y: 80px; --pad: 56px; }
+[data-density="airy"] { --pad-y: 160px; --pad: 96px; }
+
+[data-palette="forest"] {
+  --bg: #fbf6ee; --bg-soft: #f0eadb; --bg-warm: #e6e0cb; --paper: #fdfaf3;
+  --ink: #2d2f25; --ink-soft: #5a5d4a; --ink-mute: #909377;
+  --line: #d2cfb6; --line-soft: #e2dec5;
+  --accent: #6f8a5b; --accent-deep: #4f6840; --accent-soft: #b3c89e; --gold: #c4a05c;
+}
+[data-palette="terracotta"] {
+  --bg: #fdf4e8; --bg-soft: #f6e6d0; --bg-warm: #efd9b8; --paper: #fff9ee;
+  --ink: #2f2722; --ink-soft: #5d4a3a; --ink-mute: #a08a6f;
+  --line: #e9c89e; --line-soft: #f0dcb8;
+  --accent: #d97a4e; --accent-deep: #b35a30; --accent-soft: #f0b48a; --gold: #d4a574;
+}
+[data-palette="sand"] {
+  --bg: #f4ede0; --bg-soft: #ebe1cc; --bg-warm: #ddcfae; --paper: #faf4e8;
+  --ink: #3a2d1f; --ink-soft: #6e5a44; --ink-mute: #a08a72;
+  --line: #cfbe98; --line-soft: #ddd0ad;
+  --accent: #a8845a; --accent-deep: #80623d; --accent-soft: #d3b88a; --gold: #c79759;
+}
+
+[data-dark="true"] {
+  --bg: #1f1a14; --bg-soft: #25201a; --bg-warm: #2c251c; --paper: #2a241c;
+  --ink: #f3ead8; --ink-soft: #c9bca0; --ink-mute: #93876d;
+  --line: #463b2c; --line-soft: #38301f;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "palt";
+  background-image:
+    radial-gradient(ellipse 1200px 800px at 10% -10%, rgba(184,99,58,0.05), transparent 60%),
+    radial-gradient(ellipse 900px 700px at 110% 20%, rgba(199,151,89,0.06), transparent 60%);
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+img { display: block; max-width: 100%; }
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+@media (max-width: 900px) {
+  :root { --pad: 24px; --pad-y: 80px; }
+}
+
+/* ───── header ───── */
+.site-header {
+  position: sticky; top: 0; z-index: 30;
+  backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  border-bottom: 1px solid var(--line-soft);
+}
+.site-header-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 16px var(--pad);
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.brand { display: inline-flex; align-items: baseline; gap: 10px; color: var(--ink); }
+.brand-mark { color: var(--accent); display: inline-flex; align-self: center; }
+.brand-name { font-family: var(--font-serif); font-size: 20px; letter-spacing: 0.02em; font-weight: 500; }
+.brand-sub { font-family: var(--font-mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.1em; text-transform: lowercase; }
+.site-nav { display: flex; align-items: center; gap: 28px; font-size: 14px; color: var(--ink-soft); }
+.site-nav a { transition: color .2s ease; }
+.site-nav a:hover { color: var(--ink); }
+.nav-cta {
+  background: var(--ink); color: var(--paper) !important;
+  padding: 10px 16px; border-radius: 999px; font-size: 13px;
+  font-family: var(--font-sans);
+  transition: background .2s ease, transform .2s ease;
+}
+.nav-cta:hover { background: var(--accent-deep); transform: translateY(-1px); }
+@media (max-width: 720px) {
+  .site-nav { gap: 16px; }
+  .site-nav a:not(.nav-cta) { display: none; }
+  .brand-sub { display: none; }
+}
+
+/* ───── buttons ───── */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 22px; border-radius: 999px;
+  font-size: 14.5px; font-weight: 500; letter-spacing: 0.03em;
+  transition: transform .2s ease, background .2s ease, color .2s ease, box-shadow .2s ease;
+  white-space: nowrap; cursor: pointer; border: none;
+}
+.btn-primary { background: var(--ink); color: var(--paper); box-shadow: var(--shadow-sm); }
+.btn-primary:hover { background: var(--accent-deep); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+.btn-ghost:hover { background: var(--bg-soft); }
+.btn-outline {
+  background: transparent; color: inherit;
+  border: 1px solid currentColor; opacity: 0.85;
+}
+.btn-outline:hover { background: rgba(0,0,0,0.05); opacity: 1; }
+.design-dark .btn-outline:hover { background: rgba(255,255,255,0.08); }
+.btn-large { padding: 18px 30px; font-size: 16px; }
+
+/* ───── eyebrow / section heading ───── */
+.eyebrow, .section-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px; letter-spacing: 0.14em;
+  text-transform: lowercase; color: var(--ink-mute);
+}
+.eyebrow-dot {
+  width: 6px; height: 6px; background: var(--accent);
+  border-radius: 999px;
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+.section-head { padding: 0 0 56px; max-width: 720px; }
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(32px, 4.4vw, 52px);
+  line-height: 1.3; letter-spacing: 0.01em;
+  margin: 18px 0 18px; color: var(--ink);
+}
+.section-lead {
+  color: var(--ink-soft); font-size: 15.5px; line-height: 2;
+  margin: 0; max-width: 540px;
+}
+
+/* ───── hero ───── */
+.hero { padding: 64px 0 0; position: relative; }
+.hero-grid {
+  max-width: var(--max); margin: 0 auto;
+  padding: 24px var(--pad) 64px;
+  display: grid; grid-template-columns: 1.05fr 1fr;
+  gap: 72px; align-items: center;
+}
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+.hero-title {
+  font-family: var(--font-serif); font-weight: 500;
+  font-size: clamp(38px, 5.4vw, 68px);
+  line-height: 1.35; letter-spacing: 0.005em;
+  margin: 22px 0 28px; color: var(--ink);
+  text-wrap: pretty;
+}
+.hero-title em {
+  font-style: normal; position: relative; color: var(--accent-deep);
+}
+.hero-title em::after {
+  content: ""; position: absolute;
+  left: -2px; right: -2px; bottom: 0.08em;
+  height: 0.32em; background: var(--accent-soft);
+  opacity: 0.45; z-index: -1; border-radius: 3px;
+}
+.hero-sub {
+  color: var(--ink-soft); font-size: 16px; line-height: 2;
+  max-width: 480px; margin: 0 0 36px;
+}
+.hero-cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 48px; }
+.hero-meta {
+  list-style: none; padding: 24px 0 0; margin: 0;
+  display: flex; gap: 40px; border-top: 1px dashed var(--line);
+}
+.hero-meta li { display: flex; flex-direction: column; gap: 2px; }
+.hero-meta strong {
+  font-family: var(--font-serif); font-weight: 500;
+  font-size: 24px; color: var(--ink);
+}
+.hero-meta span {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.1em; color: var(--ink-mute); text-transform: uppercase;
+}
+
+.hero-art {
+  display: grid; grid-template-columns: 1.7fr 1fr;
+  gap: 16px; height: 460px;
+}
+.hero-art-frame {
+  position: relative;
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line-soft);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.hero-art-frame > img {
+  width: 100%; height: 100%; object-fit: contain;
+  padding: 2%;
+}
+.hero-art-side {
+  display: grid; grid-template-rows: 1.4fr 1fr; gap: 16px;
+}
+.hero-art-cell {
+  position: relative;
+  background: var(--paper);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line-soft);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.hero-art-cell img {
+  width: 100%; height: 100%; object-fit: contain; padding: 2%;
+}
+.hero-tag {
+  position: absolute; top: 18px; left: 18px;
+  background: var(--paper); border: 1px solid var(--line);
+  padding: 8px 14px 8px 12px;
+  border-radius: 999px;
+  display: inline-flex; flex-direction: column; gap: 0; line-height: 1.1;
+  box-shadow: var(--shadow-sm); z-index: 2;
+}
+.hero-tag-num { font-family: var(--font-mono); font-size: 11px; color: var(--accent-deep); letter-spacing: 0.06em; }
+.hero-tag-label { font-family: var(--font-serif); font-size: 13px; color: var(--ink); }
+@media (max-width: 900px) { .hero-art { height: 360px; } }
+
+.marquee {
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--bg-soft);
+  overflow: hidden; margin-top: 24px;
+}
+.marquee-track {
+  display: flex; gap: 0; width: max-content;
+  animation: marquee 50s linear infinite;
+}
+.marquee-row {
+  display: flex; align-items: center; gap: 40px;
+  padding: 18px 20px;
+  font-family: var(--font-serif); font-size: 14px;
+  letter-spacing: 0.06em; color: var(--ink-soft);
+  flex-shrink: 0;
+}
+.marquee-row span:nth-child(even) { color: var(--accent); font-size: 11px; font-family: var(--font-mono); }
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ───── concept ───── */
+.concept {
+  padding: var(--pad-y) 0;
+  max-width: var(--max); margin: 0 auto;
+  padding-left: var(--pad); padding-right: var(--pad);
+}
+.concept-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+@media (max-width: 900px) { .concept-grid { grid-template-columns: 1fr; } }
+.concept-card {
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-lg);
+  padding: 36px 32px 32px;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.concept-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.concept-num {
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.16em; color: var(--accent);
+  margin-bottom: 24px; display: inline-block;
+  padding: 4px 10px; border: 1px solid var(--accent-soft);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-soft) 18%, transparent);
+}
+.concept-title {
+  font-family: var(--font-serif); font-weight: 500;
+  font-size: 20px; line-height: 1.55;
+  margin: 0 0 14px; color: var(--ink);
+}
+.concept-body { color: var(--ink-soft); font-size: 14.5px; line-height: 2; margin: 0; }
+
+/* ───── designs ───── */
+.designs { }
+.designs-intro { padding: var(--pad-y) var(--pad) 56px; }
+
+.design {
+  padding: 96px 0;
+  background: var(--bg);
+  border-top: 1px solid var(--line-soft);
+}
+.design + .design { border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent); }
+.design-dark {
+  background: var(--bg);
+  color: #f3ead8;
+}
+.design-dark .design-title,
+.design-dark .design-desc,
+.design-dark .design-feature-name,
+.design-dark .design-mini-name {
+  color: #f3ead8;
+}
+.design-dark .design-feature-price,
+.design-dark .design-mini-price {
+  color: color-mix(in srgb, #f3ead8 75%, transparent);
+}
+.design-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding-left: var(--pad); padding-right: var(--pad);
+}
+.design-head { max-width: 720px; margin: 0 0 56px; }
+.design-head-left { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+.design-num {
+  display: inline-flex; align-items: baseline; gap: 6px;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.1em; color: currentColor; opacity: 0.7;
+}
+.design-num-val {
+  font-family: var(--font-serif); font-size: 28px; font-weight: 500;
+  color: var(--accent); opacity: 1;
+  letter-spacing: 0;
+}
+.design-num-total { opacity: 0.5; }
+.design-tag {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 5px 12px; border-radius: 999px;
+  background: var(--accent); color: #fff;
+  align-self: center;
+}
+.design-title {
+  font-family: var(--font-serif); font-weight: 500;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.35; margin: 0 0 16px; color: var(--ink);
+  letter-spacing: 0.005em;
+}
+.design-desc {
+  color: var(--ink-soft); line-height: 2; font-size: 15px;
+  margin: 0 0 18px; max-width: 600px;
+}
+.design-dark .design-desc { color: color-mix(in srgb, #f3ead8 75%, transparent); }
+.design-stats {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-family: var(--font-mono); font-size: 12px;
+  color: currentColor; opacity: 0.65;
+  letter-spacing: 0.06em;
+}
+.design-stats .dot { opacity: 0.4; }
+
+.design-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 32px;
+  align-items: stretch;
+}
+@media (max-width: 900px) {
+  .design-grid { grid-template-columns: 1fr; }
+}
+.design-feature {
+  display: flex; flex-direction: column; gap: 16px;
+  transition: transform .25s ease;
+}
+.design-feature:hover { transform: translateY(-4px); }
+.design-feature-img {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-md);
+}
+.design-feature-img img {
+  width: 100%; height: 100%; object-fit: contain; padding: 6%;
+}
+.design-feature-tag {
+  position: absolute; top: 16px; left: 16px;
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 5px 11px; border-radius: 999px;
+  background: var(--ink); color: var(--paper);
+}
+.design-feature-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px; padding: 0 4px;
+}
+.design-feature-name {
+  font-family: var(--font-serif); font-size: 18px; color: var(--ink);
+}
+.design-feature-price {
+  font-family: var(--font-mono); font-size: 14px; color: var(--ink-soft);
+}
+
+.design-rest {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  align-content: stretch;
+}
+.design-mini {
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform .25s ease;
+}
+.design-mini:hover { transform: translateY(-3px); }
+.design-mini-img {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #fff;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line-soft);
+  box-shadow: var(--shadow-sm);
+}
+.design-mini-img img {
+  width: 100%; height: 100%; object-fit: contain; padding: 8%;
+}
+.design-mini-meta {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 8px; padding: 0 2px;
+  font-size: 12.5px;
+}
+.design-mini-name {
+  font-family: var(--font-serif); font-size: 14px; color: var(--ink);
+  flex: 1; min-width: 0;
+}
+.design-mini-price {
+  font-family: var(--font-mono); font-size: 12px; color: var(--ink-soft);
+}
+
+.design-foot {
+  margin-top: 56px; display: flex; justify-content: center;
+}
+
+/* ───── faq ───── */
+.faq {
+  padding: var(--pad-y) 0;
+  max-width: 820px; margin: 0 auto;
+  padding-left: var(--pad); padding-right: var(--pad);
+}
+.faq-list { border-top: 1px solid var(--line); }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item summary {
+  list-style: none; cursor: pointer;
+  display: grid; grid-template-columns: 60px 1fr 24px;
+  align-items: center; gap: 16px;
+  padding: 24px 8px;
+  transition: background .2s ease;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item:hover summary { background: var(--bg-soft); }
+.faq-q-num { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; color: var(--accent); }
+.faq-q-text { font-family: var(--font-serif); font-size: 16.5px; color: var(--ink); }
+.faq-q-mark {
+  font-family: var(--font-serif); font-size: 22px;
+  color: var(--ink-mute); text-align: center;
+  transition: transform .25s ease; line-height: 1;
+}
+.faq-item[open] .faq-q-mark { transform: rotate(45deg); }
+.faq-a { padding: 0 8px 28px 84px; color: var(--ink-soft); line-height: 2; font-size: 14.5px; }
+@media (max-width: 600px) {
+  .faq-item summary { grid-template-columns: 48px 1fr 20px; gap: 10px; }
+  .faq-a { padding-left: 58px; }
+}
+
+/* ───── final CTA ───── */
+.final-cta {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--pad-y) 0;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.final-cta::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 0%, color-mix(in srgb, var(--accent) 25%, transparent), transparent 60%),
+    radial-gradient(ellipse 500px 360px at 90% 100%, color-mix(in srgb, var(--gold) 18%, transparent), transparent 60%);
+  pointer-events: none;
+}
+.final-cta-inner {
+  position: relative;
+  max-width: 760px; margin: 0 auto;
+  padding-left: var(--pad); padding-right: var(--pad);
+}
+.eyebrow-on-dark { color: color-mix(in srgb, var(--paper) 70%, transparent); }
+.final-cta-title {
+  font-family: var(--font-serif); font-weight: 500;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.45; margin: 18px 0 24px; color: var(--paper);
+}
+.final-cta-body {
+  color: color-mix(in srgb, var(--paper) 80%, transparent);
+  line-height: 2; font-size: 15px;
+  margin: 0 auto 40px; max-width: 520px;
+}
+.final-cta .btn-primary { background: var(--paper); color: var(--ink); }
+.final-cta .btn-primary:hover { background: var(--accent-soft); color: var(--ink); }
+.final-cta-note {
+  margin-top: 20px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.08em;
+  color: color-mix(in srgb, var(--paper) 50%, transparent);
+}
+
+/* ───── footer ───── */
+.site-footer {
+  background: var(--bg-soft);
+  padding: 48px 0 36px;
+  border-top: 1px solid var(--line-soft);
+}
+.site-footer-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding-left: var(--pad); padding-right: var(--pad);
+  display: flex; flex-direction: column; align-items: center; gap: 18px;
+}
+.footer-brand {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-serif); font-size: 16px; color: var(--ink);
+}
+.footer-nav {
+  display: flex; gap: 24px;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.08em; color: var(--ink-soft);
+}
+.footer-nav a:hover { color: var(--accent); }
+.footer-copy {
+  font-family: var(--font-mono); font-size: 11px;
+  color: var(--ink-mute); letter-spacing: 0.04em;
+}
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <!-- tweaks panel -->
+  <script type="text/babel">
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-body::-webkit-scrollbar{width:8px}
+  .twk-body::-webkit-scrollbar-track{background:transparent;margin:2px}
+  .twk-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;
+    border:2px solid transparent;background-clip:content-box}
+  .twk-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.25);
+    border:2px solid transparent;background-clip:content-box}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;
+    color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+  .twk-field{appearance:none;width:100%;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center}
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;
+    overflow-wrap:anywhere}
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
+    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
+    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
+    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);
+    box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),
+    0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
+    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i:first-child{box-shadow:none}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+      ? keyOrEdits : { [keyOrEdits]: val };
+    setValues((prev) => ({ ...prev, ...edits }));
+  }, []);
+  return [values, setTweak];
+}
+
+function TweaksPanel({ title = 'Tweaks', children }) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth, h = panel.offsetHeight;
+    const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+    };
+    panel.style.right = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    const ro = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(clampToViewport)
+      : null;
+    if (ro) { ro.observe(document.documentElement); return () => ro.disconnect(); }
+    window.addEventListener('resize', clampToViewport);
+    return () => window.removeEventListener('resize', clampToViewport);
+  }, [open, clampToViewport]);
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      const t = e?.data?.type;
+      if (t === '__activate_edit_mode') setOpen(true);
+      else if (t === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const onDragStart = (e) => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX, sy = e.clientY;
+    const startRight = window.innerWidth - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = (ev) => {
+      offsetRef.current = {
+        x: startRight - (ev.clientX - sx),
+        y: startBottom - (ev.clientY - sy),
+      };
+      clampToViewport();
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+    };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+
+  if (!open) {
+    return (
+      <button
+        onClick={() => setOpen(true)}
+        style={{
+          position: 'fixed', right: 16, bottom: 16, zIndex: 2147483646,
+          background: 'rgba(61,47,36,0.9)', color: '#fbf6ec',
+          border: 'none', borderRadius: '999px', padding: '10px 18px',
+          font: '12px/1 ui-sans-serif,system-ui,sans-serif', fontWeight: 600,
+          cursor: 'pointer', backdropFilter: 'blur(8px)',
+          boxShadow: '0 2px 12px rgba(0,0,0,0.25)',
+          letterSpacing: '0.04em',
+        }}
+      >
+        Tweaks
+      </button>
+    );
+  }
+
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel"
+           style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" aria-label="Close tweaks"
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={() => setOpen(false)}>✕</button>
+        </div>
+        <div className="twk-body">{children}</div>
+      </div>
+    </>
+  );
+}
+
+function TweakSection({ title, label, children }) {
+  return (
+    <>
+      <div className="twk-sect">{title || label}</div>
+      {children}
+    </>
+  );
+}
+
+function TweakRow({ label, value, children, inline = false }) {
+  return (
+    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+      <div className="twk-lbl">
+        <span>{label}</span>
+        {value != null && <span className="twk-val">{value}</span>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+              role="switch" aria-checked={!!value}
+              onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+
+  const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
+  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+  const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
+
+  if (!fitsAsSegments) {
+    return (
+      <TweakRow label={label}>
+        <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
+          {options.map((o) => {
+            const v = typeof o === 'object' ? o.value : o;
+            const l = typeof o === 'object' ? o.label : o;
+            return <option key={v} value={v}>{l}</option>;
+          })}
+        </select>
+      </TweakRow>
+    );
+  }
+
+  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+  const n = opts.length;
+
+  const segAt = (clientX) => {
+    const r = trackRef.current.getBoundingClientRect();
+    const inner = r.width - 4;
+    const i = Math.floor(((clientX - r.left - 2) / inner) * n);
+    return opts[Math.max(0, Math.min(n - 1, i))].value;
+  };
+
+  const onPointerDown = (e) => {
+    setDragging(true);
+    const v0 = segAt(e.clientX);
+    if (v0 !== valueRef.current) onChange(v0);
+    const move = (ev) => {
+      if (!trackRef.current) return;
+      const v = segAt(ev.clientX);
+      if (v !== valueRef.current) onChange(v);
+    };
+    const up = () => {
+      setDragging(false);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+
+  return (
+    <TweakRow label={label}>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown}
+           className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+        <div className="twk-seg-thumb"
+             style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`,
+                      width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map((o) => (
+          <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </TweakRow>
+  );
+}
+
+function __twkIsLight(hex) {
+  const h = String(hex).replace('#', '');
+  const x = h.length === 3 ? h.replace(/./g, (c) => c + c) : h.padEnd(6, '0');
+  const n = parseInt(x.slice(0, 6), 16);
+  if (Number.isNaN(n)) return true;
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return r * 299 + g * 587 + b * 114 > 148000;
+}
+
+const __TwkCheck = ({ light }) => (
+  <svg viewBox="0 0 14 14" aria-hidden="true">
+    <path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2"
+          strokeLinecap="round" strokeLinejoin="round"
+          stroke={light ? 'rgba(0,0,0,.78)' : '#fff'} />
+  </svg>
+);
+
+function TweakColor({ label, value, options, onChange }) {
+  if (!options || !options.length) {
+    return (
+      <div className="twk-row twk-row-h">
+        <div className="twk-lbl"><span>{label}</span></div>
+        <input type="color" className="twk-swatch" value={value}
+               onChange={(e) => onChange(e.target.value)} />
+      </div>
+    );
+  }
+  return (
+    <TweakRow label={label}>
+      <div className="twk-chips" role="radiogroup">
+        {options.map((o, i) => {
+          // Support {value, color} objects, plain arrays, or plain strings
+          const isObj = o && typeof o === 'object' && !Array.isArray(o);
+          const optValue = isObj ? o.value : o;
+          const rawColors = isObj ? o.color : o;
+          const colors = Array.isArray(rawColors) ? rawColors : [rawColors];
+          const [hero, ...rest] = colors;
+          const sup = rest.slice(0, 4);
+          const on = optValue === value;
+          return (
+            <button key={i} type="button" className="twk-chip" role="radio"
+                    aria-checked={on} data-on={on ? '1' : '0'}
+                    style={{ background: hero }}
+                    onClick={() => onChange(optValue)}>
+              {sup.length > 0 && (
+                <span>{sup.map((c, j) => <i key={j} style={{ background: c }} />)}</span>
+              )}
+              {on && <__TwkCheck light={__twkIsLight(hero)} />}
+            </button>
+          );
+        })}
+      </div>
+    </TweakRow>
+  );
+}
+
+Object.assign(window, {
+  useTweaks, TweaksPanel, TweakSection, TweakRow,
+  TweakToggle, TweakRadio, TweakColor,
+});
+  </script>
+
+  <!-- components -->
+  <script type="text/babel">
+const DESIGNS = [
+  {
+    id: 'penguin',
+    name: 'サーペンちゃん',
+    tag: 'Minimal',
+    desc: 'やわらかなベージュと深い藍。波のなかでひと休みする、すこし哲学的なサーファーのペンちゃん。穏やかな日常に寄り添うミニマルなシリーズです。',
+    accent: '#3a4a6b',
+    bg: '#ece4d2',
+    products: [
+      { name: 'マグカップ', price: '¥1,980', img: 'project/images/penguin-mug.png' },
+      { name: 'マグカップ (square)', price: '¥1,980', img: 'project/images/penguin-mug2.png' },
+      { name: 'スマホケース', price: '¥3,180', img: 'project/images/penguin-phonecase.png' },
+      { name: 'アクリルキーホルダー', price: '¥1,320', img: 'project/images/penguin-keychain.png' },
+      { name: 'ステッカー', price: '¥440', img: 'project/images/penguin-sticker.png' },
+    ],
+  },
+  {
+    id: 'triangle',
+    name: 'ヌコピラミッド',
+    tag: 'Geometric',
+    desc: '三つの三角と、ちいさな顔。重なる山々のような幾何学のなかに、ふと笑みのにじむねこちゃんを忍ばせて。',
+    accent: '#a85c33',
+    bg: '#e8dec5',
+    products: [
+      { name: 'トートバッグ', price: '¥3,080', img: 'project/images/triangle-tote.png' },
+      { name: 'マグカップ', price: '¥1,980', img: 'project/images/triangle-mug.png' },
+      { name: 'アクリルキーホルダー', price: '¥1,320', img: 'project/images/triangle-keychain.png' },
+      { name: 'ステッカー', price: '¥440', img: 'project/images/triangle-sticker.png' },
+    ],
+  },
+  {
+    id: 'cafe',
+    name: 'CAFE RACER',
+    tag: 'Vintage',
+    desc: 'コーヒーとバイクの香り。古き良きスタイルのバッジロゴを、レッドとネイビーの2配色で。コーヒーブレイクのお供に。',
+    accent: '#7a3a3a',
+    bg: '#f0e6d4',
+    products: [
+      { name: 'サーモタンブラー', price: '¥3,300', img: 'project/images/cafe-cup.png' },
+      { name: 'ステッカー (Navy)', price: '¥440', img: 'project/images/cafe-sticker-navy.png' },
+      { name: 'ステッカー (Red)', price: '¥440', img: 'project/images/cafe-sticker-red.png' },
+      { name: 'アクリルキーホルダー (Navy)', price: '¥1,320', img: 'project/images/cafe-keychain.png' },
+      { name: 'アクリルキーホルダー (Red)', price: '¥1,320', img: 'project/images/cafe-keychain-red.png' },
+    ],
+  },
+  {
+    id: 'munetaro',
+    name: 'Mune-taro / 胸太郎くん',
+    tag: 'Character',
+    desc: 'きょうも筋トレに励む、はかま姿の胸太郎。ちょっと笑える、でも応援したくなる。胸筋を鍛えるあなたにおひとついかが。',
+    accent: '#2c4a6b',
+    bg: '#f0e9da',
+    products: [
+      { name: 'スタンダードTシャツ', price: '¥3,520', img: 'project/images/munetaro-tshirt.png' },
+      { name: 'アクリルキーホルダー', price: '¥1,320', img: 'project/images/munetaro-keychain.png' },
+      { name: 'ステッカー', price: '¥440', img: 'project/images/munetaro-sticker.png' },
+    ],
+  },
+  {
+    id: 'cat',
+    name: 'NEON ミケ',
+    tag: 'Neon',
+    desc: 'ピンクとシアンのネオン管が、夜の路地裏で目をひらく猫を描く。日常からすこし逸脱したい、そんな日のためのアイテム。',
+    accent: '#c93a8a',
+    bg: '#1c1620',
+    dark: true,
+    products: [
+      { name: 'スタンダードTシャツ', price: '¥3,520', img: 'project/images/cat-tshirt.png' },
+      { name: 'マグカップ', price: '¥1,980', img: 'project/images/cat-mug.png' },
+      { name: 'アクリルキーホルダー', price: '¥1,320', img: 'project/images/cat-keychain.png' },
+      { name: 'ステッカー', price: '¥440', img: 'project/images/cat-sticker.png' },
+    ],
+  },
+  {
+    id: 'frog',
+    name: 'F.R.O.G',
+    tag: 'Graffiti',
+    desc: 'ストリートのスプレー缶から滴る、きみょうなカエル。グラフィティの粗さと、すこしポップな配色で、肩の力を抜いて着られる一枚。',
+    accent: '#d63a8e',
+    bg: '#1c1820',
+    dark: true,
+    products: [
+      { name: 'スタンダードTシャツ', price: '¥3,520', img: 'project/images/frog-tshirt.png' },
+      { name: 'アクリルキーホルダー', price: '¥1,320', img: 'project/images/frog-keychain.png' },
+      { name: 'ステッカー', price: '¥440', img: 'project/images/frog-sticker.png' },
+    ],
+  },
+];
+
+const SHOP_URL = 'https://suzuri.jp/bandai_nameko/products';
+
+const Hero = () => {
+  const totalProducts = DESIGNS.reduce((s, d) => s + d.products.length, 0);
+  return (
+    <section className="hero">
+      <div className="hero-grid">
+        <div className="hero-copy">
+          <div className="eyebrow">
+            <span className="eyebrow-dot"></span>
+            <span>SUZURI shop · {DESIGNS.length} designs / {totalProducts} items</span>
+          </div>
+          <h1 className="hero-title">
+            すこし<em>ひと息</em>つきたい<br />
+            日のための、<br />
+            <em>すきな絵</em>と道具たち。
+          </h1>
+          <p className="hero-sub">
+            ミニマルなペンギンから、ネオンに光るネコ、街角のグラフィティまで。
+            気分のかずだけ、絵柄をそろえました。
+            きょう手に取りたいデザインから、どうぞ。
+          </p>
+          <div className="hero-cta-row">
+            <a className="btn btn-primary" href={SHOP_URL} target="_blank" rel="noopener">
+              <span>SUZURIショップで見る</span>
+              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </a>
+            <a className="btn btn-ghost" href="#designs">デザイン一覧へ</a>
+          </div>
+          <ul className="hero-meta">
+            <li><strong>{DESIGNS.length}</strong><span>designs</span></li>
+            <li><strong>{totalProducts}</strong><span>items</span></li>
+            <li><strong>¥440〜</strong><span>from</span></li>
+          </ul>
+        </div>
+
+        <div className="hero-art">
+          <div className="hero-art-frame">
+            <img src="project/images/penguin-mug.png" alt="サーペンちゃん マグカップ" />
+            <div className="hero-tag">
+              <span className="hero-tag-num">No.01</span>
+              <span className="hero-tag-label">Today's pick</span>
+            </div>
+          </div>
+          <div className="hero-art-side">
+            <div className="hero-art-cell"><img src="project/images/triangle-tote.png" alt="ヌコピラミッド トートバッグ" /></div>
+            <div className="hero-art-cell"><img src="project/images/cafe-keychain.png" alt="CAFE RACER キーホルダー" /></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="marquee">
+        <div className="marquee-track">
+          {[0, 1].map((k) => (
+            <div className="marquee-row" key={k}>
+              {DESIGNS.map((d) => (
+                <React.Fragment key={d.id}>
+                  <span>{d.name}</span><span aria-hidden="true">✦</span>
+                </React.Fragment>
+              ))}
+              <span>printed on demand</span><span aria-hidden="true">✦</span>
+              <span>shipped from SUZURI</span><span aria-hidden="true">✦</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Concept = () => {
+  const points = [
+    {
+      n: '01',
+      title: 'すきな絵が、すきなかたちに',
+      body: 'おなじ絵柄で、Tシャツ・マグ・ステッカー・キーホルダーまで。手にとりたい「かたち」を、自由に選んでください。',
+    },
+    {
+      n: '02',
+      title: '気分のかずだけ、絵がある',
+      body: 'やさしいミニマルから、ストリートのネオンまで。きょうの気分にぴったりくる一枚を、すきに選んでください。',
+    },
+    {
+      n: '03',
+      title: 'SUZURIから、あなたの元へ',
+      body: '注文を受けてから、一点ずつ丁寧にプリント。時間はすこしかかるけれど、その分まっさらな状態でお届けします。',
+    },
+  ];
+
+  return (
+    <section className="concept" id="concept">
+      <div className="section-head">
+        <div className="section-eyebrow">— concept</div>
+        <h2 className="section-title">
+          いそがない、<br />
+          というブランドのこと。
+        </h2>
+        <p className="section-lead">
+          午後3時のカフェのような、ゆっくりとした空気感を。
+          すきな絵柄を、すきなかたちで。手にとるたびに、ほんの少し気持ちがほどけるアイテムを選んでいます。
+        </p>
+      </div>
+      <div className="concept-grid">
+        {points.map((p) => (
+          <article className="concept-card" key={p.n}>
+            <div className="concept-num">{p.n}</div>
+            <h3 className="concept-title">{p.title}</h3>
+            <p className="concept-body">{p.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const DesignSection = ({ d, idx }) => {
+  const [main, ...rest] = d.products;
+  const isDark = d.dark;
+
+  return (
+    <section
+      className={`design ${isDark ? 'design-dark' : ''}`}
+      id={`design-${d.id}`}
+      style={{ '--bg': d.bg, '--accent': d.accent }}
+    >
+      <div className="design-inner">
+        <div className="design-head">
+          <div className="design-head-left">
+            <div className="design-num">
+              <span className="design-num-label">design</span>
+              <span className="design-num-val">{String(idx + 1).padStart(2, '0')}</span>
+              <span className="design-num-total">/ {String(DESIGNS.length).padStart(2, '0')}</span>
+            </div>
+            <span className="design-tag">{d.tag}</span>
+          </div>
+          <h2 className="design-title">{d.name}</h2>
+          <p className="design-desc">{d.desc}</p>
+          <div className="design-stats">
+            <span>{d.products.length} items</span>
+            <span className="dot" aria-hidden="true">·</span>
+            <span>¥{Math.min(...d.products.map((p) => parseInt(p.price.replace(/[^\d]/g, ''), 10))).toLocaleString()}〜</span>
+          </div>
+        </div>
+
+        <div className="design-grid">
+          <a className="design-feature" href={SHOP_URL} target="_blank" rel="noopener">
+            <div className="design-feature-img">
+              <img src={main.img} alt={`${d.name} ${main.name}`} loading="lazy" />
+              <span className="design-feature-tag">FEATURED</span>
+            </div>
+            <div className="design-feature-meta">
+              <span className="design-feature-name">{main.name}</span>
+              <span className="design-feature-price">{main.price}</span>
+            </div>
+          </a>
+
+          <div className="design-rest">
+            {rest.map((p, i) => (
+              <a className="design-mini" href={SHOP_URL} target="_blank" rel="noopener" key={i}>
+                <div className="design-mini-img">
+                  <img src={p.img} alt={`${d.name} ${p.name}`} loading="lazy" />
+                </div>
+                <div className="design-mini-meta">
+                  <span className="design-mini-name">{p.name}</span>
+                  <span className="design-mini-price">{p.price}</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <div className="design-foot">
+          <a className="btn btn-outline" href={SHOP_URL} target="_blank" rel="noopener">
+            <span>{d.name} のすべての商品を見る</span>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const Designs = () => (
+  <div className="designs" id="designs">
+    <div className="designs-intro container">
+      <div className="section-eyebrow">— lineup by design</div>
+      <h2 className="section-title">{DESIGNS.length}つの絵柄、<br />それぞれの世界。</h2>
+      <p className="section-lead">
+        おなじ絵柄でも、Tシャツやマグカップやステッカーへ。
+        かたちを変えて、毎日のすきな場所に居場所を見つけられるように。
+      </p>
+    </div>
+    {DESIGNS.map((d, i) => (
+      <DesignSection d={d} idx={i} key={d.id} />
+    ))}
+  </div>
+);
+
+const FAQ = () => {
+  const items = [
+    { q: '購入はどこからできますか？', a: 'すべての商品はSUZURI（suzuri.jp）の当ショップページからご購入いただけます。各商品カードのリンクから、SUZURI上の商品ページに遷移します。' },
+    { q: '配送はどのくらいかかりますか？', a: 'ご注文を受けてから1点ずつプリントするため、発送までに通常5〜10営業日ほどお時間をいただきます。お届け日数は配送先により前後します。' },
+    { q: '返品・交換は可能ですか？', a: '商品の特性上、お客様都合での返品・交換は原則承っておりません。配送中の破損や不良品については、SUZURIのカスタマーサポートにてご対応いたします。' },
+    { q: '色味は写真と同じですか？', a: 'モニター環境やプリント工程により、わずかに色味が異なる場合があります。あらかじめご了承ください。' },
+    { q: 'デザインのリクエストはできますか？', a: '現在のデザインは予告なく追加・終了する場合があります。リクエストはSUZURIのショップページ経由でお寄せください。' },
+  ];
+
+  const [openIdx, setOpenIdx] = React.useState(0);
+
+  return (
+    <section className="faq" id="faq">
+      <div className="section-head">
+        <div className="section-eyebrow">— faq</div>
+        <h2 className="section-title">よくあるご質問。</h2>
+      </div>
+      <div className="faq-list">
+        {items.map((it, i) => (
+          <details
+            className="faq-item"
+            key={i}
+            open={openIdx === i}
+            onToggle={(e) => { if (e.currentTarget.open) setOpenIdx(i); }}
+          >
+            <summary>
+              <span className="faq-q-num">Q.{String(i + 1).padStart(2, '0')}</span>
+              <span className="faq-q-text">{it.q}</span>
+              <span className="faq-q-mark" aria-hidden="true">+</span>
+            </summary>
+            <div className="faq-a">{it.a}</div>
+          </details>
+        ))}
+      </div>
+    </section>
+  );
+};
+
+const FinalCTA = () => (
+  <section className="final-cta">
+    <div className="final-cta-inner">
+      <div className="section-eyebrow eyebrow-on-dark">— shop now</div>
+      <h2 className="final-cta-title">
+        きょうの一杯のとなりに、<br />
+        ひとつ、いかがですか。
+      </h2>
+      <p className="final-cta-body">
+        すべての商品は、SUZURIの当ショップページよりお求めいただけます。
+        ご購入いただいた一点ずつが、明日のすこしの「ゆっくり」になりますように。
+      </p>
+      <a className="btn btn-primary btn-large" href={SHOP_URL} target="_blank" rel="noopener">
+        <span>SUZURIショップへ</span>
+        <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </a>
+      <p className="final-cta-note">※ 外部サイト（suzuri.jp）に遷移します</p>
+    </div>
+  </section>
+);
+
+const SiteHeader = () => (
+  <header className="site-header">
+    <div className="site-header-inner">
+      <a className="brand" href="#top">
+        <span className="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22">
+            <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.18" />
+            <circle cx="12" cy="12" r="5.5" fill="currentColor" />
+          </svg>
+        </span>
+        <span className="brand-name">slow goods</span>
+        <span className="brand-sub">on SUZURI</span>
+      </a>
+      <nav className="site-nav">
+        <a href="#concept">concept</a>
+        <a href="#designs">designs</a>
+        <a href="#faq">faq</a>
+        <a className="nav-cta" href={SHOP_URL} target="_blank" rel="noopener">SUZURIで買う →</a>
+      </nav>
+    </div>
+  </header>
+);
+
+const SiteFooter = () => (
+  <footer className="site-footer">
+    <div className="site-footer-inner">
+      <div className="footer-brand">
+        <span className="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20">
+            <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.18" />
+            <circle cx="12" cy="12" r="5.5" fill="currentColor" />
+          </svg>
+        </span>
+        <span>slow goods · on SUZURI</span>
+      </div>
+      <nav className="footer-nav">
+        <a href="#concept">concept</a>
+        <a href="#designs">designs</a>
+        <a href="#faq">faq</a>
+        <a href={SHOP_URL} target="_blank" rel="noopener">SUZURI shop</a>
+      </nav>
+      <small className="footer-copy">© {new Date().getFullYear()} slow goods — printed &amp; shipped by SUZURI</small>
+    </div>
+  </footer>
+);
+
+Object.assign(window, { SiteHeader, Hero, Concept, Designs, FAQ, FinalCTA, SiteFooter });
+  </script>
+
+  <!-- app -->
+  <script type="text/babel">
+const TWEAK_DEFAULTS = {
+  palette: 'cream',
+  density: 'default',
+  dark: false,
+};
+
+const App = () => {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute('data-palette', t.palette);
+    root.setAttribute('data-density', t.density);
+    root.setAttribute('data-dark', String(!!t.dark));
+  }, [t.palette, t.density, t.dark]);
+
+  return (
+    <>
+      <SiteHeader />
+      <main id="top">
+        <Hero />
+        <Concept />
+        <Designs />
+        <FAQ />
+        <FinalCTA />
+      </main>
+      <SiteFooter />
+
+      <TweaksPanel title="Tweaks">
+        <TweakSection title="ムード">
+          <TweakRadio
+            label="ダークモード"
+            value={t.dark ? 'on' : 'off'}
+            options={[
+              { value: 'off', label: 'Light' },
+              { value: 'on', label: 'Dark' },
+            ]}
+            onChange={(v) => setTweak('dark', v === 'on')}
+          />
+        </TweakSection>
+        <TweakSection title="カラーパレット">
+          <TweakColor
+            label="トーン"
+            value={t.palette}
+            options={[
+              { value: 'cream', color: ['#f6efe2', '#b8633a', '#3d2f24'] },
+              { value: 'forest', color: ['#fbf6ee', '#6f8a5b', '#2d2f25'] },
+              { value: 'terracotta', color: ['#fdf4e8', '#d97a4e', '#2f2722'] },
+              { value: 'sand', color: ['#f4ede0', '#a8845a', '#3a2d1f'] },
+            ]}
+            onChange={(v) => setTweak('palette', v)}
+          />
+        </TweakSection>
+        <TweakSection title="レイアウト">
+          <TweakRadio
+            label="余白"
+            value={t.density}
+            options={[
+              { value: 'compact', label: 'Compact' },
+              { value: 'default', label: 'Normal' },
+              { value: 'airy', label: 'Airy' },
+            ]}
+            onChange={(v) => setTweak('density', v)}
+          />
+        </TweakSection>
+      </TweaksPanel>
+    </>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById('app'));
+root.render(<App />);
+  </script>
+</body>
+</html>
