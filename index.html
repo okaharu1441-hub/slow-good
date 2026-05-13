@@ -7,6 +7,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;600&family=Zen+Kaku+Gothic+New:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Y6FDVRRMY7"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-Y6FDVRRMY7');
+  </script>
+
   <style>
 :root {
   --bg: #f6efe2;
@@ -1023,6 +1033,16 @@ const DESIGNS = [
 
 const SHOP_URL = 'https://suzuri.jp/bandai_nameko/products';
 
+const trackSuzuriClick = (clickLocation, design, product) => {
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', 'suzuri_click', {
+      click_location: clickLocation,
+      design: design || null,
+      product: product || null,
+    });
+  }
+};
+
 const Hero = () => {
   const totalProducts = DESIGNS.reduce((s, d) => s + d.products.length, 0);
   return (
@@ -1044,7 +1064,8 @@ const Hero = () => {
             きょう手に取りたいデザインから、どうぞ。
           </p>
           <div className="hero-cta-row">
-            <a className="btn btn-primary" href={SHOP_URL} target="_blank" rel="noopener">
+            <a className="btn btn-primary" href={SHOP_URL} target="_blank" rel="noopener"
+               onClick={() => trackSuzuriClick('hero')}>
               <span>SUZURIショップで見る</span>
               <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
                 <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
@@ -1168,7 +1189,8 @@ const DesignSection = ({ d, idx }) => {
         </div>
 
         <div className="design-grid">
-          <a className="design-feature" href={SHOP_URL} target="_blank" rel="noopener">
+          <a className="design-feature" href={SHOP_URL} target="_blank" rel="noopener"
+             onClick={() => trackSuzuriClick('design_feature', d.name, main.name)}>
             <div className="design-feature-img">
               <img src={main.img} alt={`${d.name} ${main.name}`} loading="lazy" />
               <span className="design-feature-tag">FEATURED</span>
@@ -1181,7 +1203,8 @@ const DesignSection = ({ d, idx }) => {
 
           <div className="design-rest">
             {rest.map((p, i) => (
-              <a className="design-mini" href={SHOP_URL} target="_blank" rel="noopener" key={i}>
+              <a className="design-mini" href={SHOP_URL} target="_blank" rel="noopener" key={i}
+                 onClick={() => trackSuzuriClick('design_mini', d.name, p.name)}>
                 <div className="design-mini-img">
                   <img src={p.img} alt={`${d.name} ${p.name}`} loading="lazy" />
                 </div>
@@ -1195,7 +1218,8 @@ const DesignSection = ({ d, idx }) => {
         </div>
 
         <div className="design-foot">
-          <a className="btn btn-outline" href={SHOP_URL} target="_blank" rel="noopener">
+          <a className="btn btn-outline" href={SHOP_URL} target="_blank" rel="noopener"
+             onClick={() => trackSuzuriClick('design_foot', d.name)}>
             <span>{d.name} のすべての商品を見る</span>
             <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
               <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
@@ -1273,7 +1297,8 @@ const FinalCTA = () => (
         すべての商品は、SUZURIの当ショップページよりお求めいただけます。
         ご購入いただいた一点ずつが、明日のすこしの「ゆっくり」になりますように。
       </p>
-      <a className="btn btn-primary btn-large" href={SHOP_URL} target="_blank" rel="noopener">
+      <a className="btn btn-primary btn-large" href={SHOP_URL} target="_blank" rel="noopener"
+         onClick={() => trackSuzuriClick('final_cta')}>
         <span>SUZURIショップへ</span>
         <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
           <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
@@ -1301,7 +1326,8 @@ const SiteHeader = () => (
         <a href="#concept">concept</a>
         <a href="#designs">designs</a>
         <a href="#faq">faq</a>
-        <a className="nav-cta" href={SHOP_URL} target="_blank" rel="noopener">SUZURIで買う →</a>
+        <a className="nav-cta" href={SHOP_URL} target="_blank" rel="noopener"
+           onClick={() => trackSuzuriClick('header')}>SUZURIで買う →</a>
       </nav>
     </div>
   </header>
@@ -1323,7 +1349,8 @@ const SiteFooter = () => (
         <a href="#concept">concept</a>
         <a href="#designs">designs</a>
         <a href="#faq">faq</a>
-        <a href={SHOP_URL} target="_blank" rel="noopener">SUZURI shop</a>
+        <a href={SHOP_URL} target="_blank" rel="noopener"
+           onClick={() => trackSuzuriClick('footer')}>SUZURI shop</a>
       </nav>
       <small className="footer-copy">© {new Date().getFullYear()} slow goods — printed &amp; shipped by SUZURI</small>
     </div>
